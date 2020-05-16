@@ -1,0 +1,5 @@
+apache|/etc/apache2/httpd.conf,/etc/apache2/apache2.conf,/etc/httpd/httpd.conf,/etc/httpd/conf/httpd.conf|apache2
+nginx|/etc/nginx/|nginx
+lsws|/usr/local/lsws/conf/|None
+ssh|~/.ssh/config,~/.ssh/known_hosts,/etc/ssh/ssh_config,/etc/ssh/sshd_config|openssh-server
+ftp|/etc/vsftpd.conf,/etc/vsftpd.allowed_users|vsftpf
