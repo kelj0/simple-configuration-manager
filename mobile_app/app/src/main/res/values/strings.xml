@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Simple Configuration Manager</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="hrvatski">Croatian</string>
+    <string name="english">English</string>
+    <string name="open_the_web_version">Logout</string>
+    <string name="wrong_email_password">Wrong email or password!</string>
+</resources>

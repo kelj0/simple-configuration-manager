@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kako se ovo prevodi?</string>
+    <string name="login">Prijava</string>
+    <string name="register">Registracija</string>
+    <string name="email">E-main</string>
+    <string name="password">Lozinka</string>
+    <string name="repeat_password">Ponovljena lozinka</string>
+    <string name="hrvatski">Hrvatski</string>
+    <string name="english">Engleski</string>
+    <string name="open_the_web_version">Odjava</string>
+    <string name="wrong_email_password">Krivi email ili lozinka</string>
+</resources>
