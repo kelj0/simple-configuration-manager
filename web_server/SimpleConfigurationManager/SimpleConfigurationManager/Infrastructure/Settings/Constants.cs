@@ -12,6 +12,6 @@
         /// </summary>
         public const int CacheDuration = 30;
 
-        public static readonly string CONNECTION_STRING = "Server=DESKTOP-L5OCQBJ;Database=ScmDb;Trusted_Connection=True;";
+        public static readonly string CONNECTION_STRING = "Server=<upisi-svoj-lokalni-db-server>;Database=ScmDb;Trusted_Connection=True;";
     }
 }
