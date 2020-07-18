@@ -1,8 +1,10 @@
+#!/usr/bin/env bash
 ROOT_URL='localhost';
 HEARTHBEAT_URL=$ROOT_URL+"/api/hearthbeat";
 DOWNLOAD_FOLDER="$HOME";
-CONFIG_NAME="config";
-CONFIG_EXTENSION="zip";
+CONFIG_NAME='config';
+CONFIG_EXTENSION='zip';
+CONFIG_SHA1='';
 IP=$(hostname -I);
 
 
@@ -13,12 +15,12 @@ hearthbeat(){
 
 zip_config_files(){
     #  gets config files and compresses it in $HOME directory
-    zip $HOME/$CONFIG_NAME.$CONFIG_EXTENSION -r /etc/nginx/ /etc/apache2/*.conf /etc/httpd/*.conf /etc/httpd/conf/*.conf /etc/http /etc/ssh/ -x /etc/ssh/*key*
+    zip "$HOME"/$CONFIG_NAME.$CONFIG_EXTENSION -r /etc/nginx/ /etc/apache2/*.conf /etc/httpd/*.conf /etc/httpd/conf/*.conf /etc/http /etc/ssh/ -x /etc/ssh/*key*
 }
 
-get_config_sha1(){
-    # returns sha1 of compressed configs 
-    return sha1sum $DOWNLOAD_FOLDER/$CONFIG_NAME.$CONFIG_EXTENSION
+update_config_sha1(){
+    # updates sha1 of compressed configs 
+    CONFIG_SHA1=$(sha1sum "$DOWNLOAD_FOLDER"/$CONFIG_NAME.$CONFIG_EXTENSION | awk '{ print $1 }');
 }
 
 check_for_new_config(){
