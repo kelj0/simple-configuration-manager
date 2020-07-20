@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-ROOT_URL='localhost';
+
+ROOT_URL='http://localhost';
 HEARTHBEAT_URL=$ROOT_URL+"/api/hearthbeat";
+DOWNLOAD_URL=$ROOT_URL+"/api/config";
 DOWNLOAD_FOLDER="$HOME";
 CONFIG_NAME='config';
 CONFIG_EXTENSION='zip';
@@ -33,7 +35,7 @@ check_for_new_config(){
 
 get_and_setup_config(){
     # downloads a new config, uncompresses and moves to needed directories
-    #curl config -o config.zip;
+    # curl $DOWNLOAD_URL -L -o $DOWNLOAD_FOLDER/$CONFIG_NAME.$CONFIG_EXTENSION;
     # zip -e
     # mv -r nginx /etc
     # mv -r apache /etc
@@ -50,7 +52,10 @@ restart_services(){
 
 help(){
     # print help
-    echo "Printing help.."
+    echo -e "\$\$Simple configuration manager shell agent\$\$"
+    echo -e "desc: used as cronjob"
+    echo -e "flags:\n\t-hb/--hearthbeat - sends hearthbeat ping to server (run every 10 seconds)"
+    echo -e "\t-c/--newconfig - check if there is missmatch/outdated config on server, downloads and moves it, and  restarts services (run every 60s)"
 }
 
 case $1 in
@@ -61,10 +66,6 @@ case $1 in
     -c|--newconfig)
         echo 'checking new config..'
         #check_for_new_config;
-        ;;
-    -r|--restart)
-        echo 'restarting services..'
-        #restart_services;
         ;;
     *)
         help;
