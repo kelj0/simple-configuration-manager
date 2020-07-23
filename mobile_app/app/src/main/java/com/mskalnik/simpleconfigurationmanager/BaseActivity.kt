@@ -42,7 +42,7 @@ open class BaseActivity : AppCompatActivity() {
         val dm: DisplayMetrics      = resources.displayMetrics
         val config: Configuration   = resources.configuration
 
-        config.setLocale(Locale(locale.toLowerCase()))
+        config.setLocale(Locale(locale.toLowerCase(Locale.ROOT)))
         resources.updateConfiguration(config, dm)
         recreate()
     }
