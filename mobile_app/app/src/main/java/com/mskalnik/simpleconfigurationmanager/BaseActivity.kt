@@ -1,12 +1,16 @@
 package com.mskalnik.simpleconfigurationmanager
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import java.util.*
 
 
@@ -66,9 +70,9 @@ open class BaseActivity : AppCompatActivity() {
     private fun saveLocale(language: String) {
         val sharedPreferences = getSharedPreferences(
             "com.mskalnik.simpleconfigurationmanager.PREFERENCES",
-            MODE_PRIVATE)
+            MODE_PRIVATE
+        )
         val editor = sharedPreferences.edit()
-        editor.putString("LANGUAGE", language)
-        editor.commit()
+        editor.putString("LANGUAGE", language).apply()
     }
 }
