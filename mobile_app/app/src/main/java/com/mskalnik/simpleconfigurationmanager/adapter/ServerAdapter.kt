@@ -35,7 +35,7 @@ class ServerAdapter (private val servers: List<Server>) : RecyclerView.Adapter<S
         twServerName.text       = server.serverName
         twServerStatus.text     = if (server.isOnline) "ONLINE" else "OFFLINE"
         twServerIp.text         = server.ipAddress
-        twServerOs.text         = server.operatingSystemId.toString()
+        twServerOs.text         = server.operatingSystem
     }
 
     override fun getItemCount(): Int {
