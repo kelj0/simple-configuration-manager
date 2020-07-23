@@ -1,8 +1,10 @@
 package com.mskalnik.simpleconfigurationmanager.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mskalnik.simpleconfigurationmanager.R
@@ -36,6 +38,9 @@ class ServerAdapter (private val servers: List<Server>) : RecyclerView.Adapter<S
         twServerStatus.text     = if (server.isOnline) "ONLINE" else "OFFLINE"
         twServerIp.text         = server.ipAddress
         twServerOs.text         = server.operatingSystem
+
+        if (server.isOnline) twServerStatus.setBackgroundColor(Color.GREEN)
+        else twServerStatus.setBackgroundColor(Color.RED)
     }
 
     override fun getItemCount(): Int {
