@@ -3,18 +3,14 @@ package com.mskalnik.simpleconfigurationmanager
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
-import android.widget.Toast
-import com.mskalnik.simpleconfigurationmanager.model.Server
 import com.mskalnik.simpleconfigurationmanager.model.Util
 import kotlinx.android.synthetic.main.activity_login.*
-import java.net.URL
 
 
 class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
         supportActionBar?.setHomeButtonEnabled(true)
 
         btnLogin.setOnClickListener {

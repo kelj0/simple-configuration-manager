@@ -1,6 +1,5 @@
 package com.mskalnik.simpleconfigurationmanager.model
 
-import android.service.autofill.Dataset
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
