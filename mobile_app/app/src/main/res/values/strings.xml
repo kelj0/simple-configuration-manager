@@ -9,4 +9,5 @@
     <string name="english">English</string>
     <string name="open_the_web_version">Logout</string>
     <string name="wrong_email_password">Wrong email or password!</string>
+    <string name="permission_warning">You need to grant permission</string>
 </resources>

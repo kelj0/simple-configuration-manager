@@ -16,7 +16,7 @@ class ServerListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_server_list)
         val rvServerList = findViewById<RecyclerView>(R.id.rvServerList)
-        val servers = Server.getServerList(20)
+        val servers = Server.getServers()
         val adapter = ServerAdapter(servers)
         rvServerList.adapter = adapter
         rvServerList.layoutManager = LinearLayoutManager(this)
