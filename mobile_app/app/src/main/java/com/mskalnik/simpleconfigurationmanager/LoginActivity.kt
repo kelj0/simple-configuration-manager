@@ -26,13 +26,13 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkLoginCredentials(): Boolean {
-        val policy =
-            StrictMode.ThreadPolicy.Builder().permitAll().build()
+        val policy = StrictMode
+                .ThreadPolicy
+                .Builder()
+                .permitAll()
+                .build()
 
         StrictMode.setThreadPolicy(policy)
-
-        // 10.0.2.2 because 127.0.0.1 is emulator
-        // var text = URL("http://10.0.2.2:3000/users/2").readText()
         return etLoginEmail.text.toString() == "mail" && etLoginPassword.text.toString() == "pass"
     }
 }

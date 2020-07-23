@@ -13,7 +13,7 @@ class Server(
     val isOnline: Boolean,
     val operatingSystemId: Int,
     val deletedL: Boolean,
-    val config: String
+    val operatingSystem: String
 ) {
     companion object {
         private const val SERVER_NAME = "http://10.0.2.2:3000"
@@ -26,23 +26,5 @@ class Server(
                 .create()
                 .fromJson<List<Server>>(json, dataType)
         }
-
-//        fun getServerList(numContacts: Int): ArrayList<Server> {
-//            var id = 0
-//            val contacts = ArrayList<Server>()
-//            for (i in 1..numContacts) {
-//                contacts.add(
-//                    Server(
-//                        "Server " + ++id,
-//                        id % 2 == 0,
-//                        "10.0.0.$id",
-//                        "Linux",
-//                        "config-no-$id",
-//                        Date(20190101)
-//                    )
-//                )
-//            }
-//            return contacts
-//        }
     }
 }
