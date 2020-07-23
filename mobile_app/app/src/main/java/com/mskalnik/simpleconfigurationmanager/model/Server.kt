@@ -6,12 +6,9 @@ import java.lang.reflect.Type
 
 
 class Server(
-    val idServer: String,
     val serverName: String,
     val ipAddress: String,
     val isOnline: Boolean,
-    val operatingSystemId: Int,
-    val deletedL: Boolean,
     val operatingSystem: String
 ) {
     companion object {
