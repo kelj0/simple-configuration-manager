@@ -2,14 +2,14 @@
 
 _Note: This is not the final look_
 
-![Mobile Home](docs/images/scm-mobile-home.png)
+![Mobile Home](docs/images/scm-home.png)
 
-![Mobile Menu](docs/images/scm-mobile-menu.png)
+![Mobile Menu](docs/images/scm-menu.png)
 
-![Mobile Login](docs/images/scm-mobile-login.png)
+![Mobile Login](docs/images/scm-login.png)
 
-![Mobile Register](docs/images/scm-mobile-register.png)
+![Mobile Register](docs/images/scm-register.png)
 
-![Mobile Server List](docs/images/scm-mobile-server-list.png)
+![Mobile Server List](docs/images/scm-servers.png)
 
-![Mobile Server Info](docs/images/scm-mobile-server-info.png)
+![Mobile Server Info](docs/images/scm-server.png)
