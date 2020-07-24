@@ -1,7 +1,5 @@
 # SCM Mobile Application
 
-_Note: This is not the final look_
-
 ![Mobile Home](docs/images/scm-home.png)
 
 ![Mobile Menu](docs/images/scm-menu.png)
