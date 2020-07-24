@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="30dp"
-    style="@android:style/Widget.Button"
+    style="@style/Widget.MaterialComponents.Button"
 >
     <LinearLayout
         android:orientation="vertical"

@@ -69,15 +69,14 @@
         android:text="@string/delete_server"
         android:background="@android:color/holo_red_dark"
         android:layout_row="4"
-        android:padding="8dp"
         android:layout_column="0"
     />
     <Button
         android:id="@+id/btnServerSend"
         android:text="@string/send_config_again"
         android:background="@android:color/holo_green_dark"
+        android:layout_marginLeft="20dp"
         android:layout_row="4"
-        android:padding="8dp"
         android:layout_column="1"
     />
 </GridLayout>

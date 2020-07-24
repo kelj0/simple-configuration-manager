@@ -17,6 +17,6 @@
     <string name="ip_address">IP Address:</string>
     <string name="operating_system">Operating system:</string>
     <string name="config_name">Config name:</string>
-    <string name="send_config_again">Send Config Again</string>
+    <string name="send_config_again">Send Config</string>
     <string name="delete_server">Delete Server</string>
 </resources>
