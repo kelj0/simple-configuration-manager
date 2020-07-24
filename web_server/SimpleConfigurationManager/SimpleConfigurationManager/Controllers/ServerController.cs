@@ -78,6 +78,34 @@ namespace SimpleConfigurationManager.Controllers
         }
 
         /// <summary>
+        /// Returns boolean value marking whether server is alive or not.
+        /// </summary>
+        /// <param name="serverId">Server ID.</param>
+        /// <returns></returns>
+        [HttpGet("{serverId}")]
+        [ProducesResponseType(typeof(ServerViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<bool>> IsAlive(string ipAddress)
+        {
+            var server = await scmContext.Set<Server>().SingleOrDefaultAsync(s => s.IpAddress == ipAddress && !s.Deleted.Value);
+
+            if (server == null)
+            {
+                return NotFound($"Server does not exist");
+            }
+            else if (DateTime.UtcNow - TimeSpan.FromMinutes(5) > server.TimeOfLastPing)
+            {
+                return Ok(true);
+            } else
+            {
+                return Ok(false);
+            }
+        }
+
+        /// <summary>
         /// Creates new server.
         /// </summary>
         /// <param name="request">Request model containing server information needed for creating new server.</param>
@@ -96,6 +124,36 @@ namespace SimpleConfigurationManager.Controllers
             var newServerId = await scmContext.SaveChangesAsync();
 
             return Ok(newServerId);
+        }
+
+        /// <summary>
+        /// Pings .
+        /// </summary>
+        /// <param name="request">Request model containing server name.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(int?), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<int?>> Ping([FromBody] ServerPingResponseModel request)
+        {
+            var server = await scmContext.Set<Server>()
+                .SingleOrDefaultAsync(s => s.ServerName == request.ServerName && !s.Deleted.Value);
+
+            if (server == null)
+            {
+                return NotFound($"Server does not exist.");
+            }
+
+            scmContext.Update<Server>(server);
+            server.TimeOfLastPing = DateTime.UtcNow;
+            await scmContext.SaveChangesAsync();
+
+            return Ok();
         }
 
         /// <summary>

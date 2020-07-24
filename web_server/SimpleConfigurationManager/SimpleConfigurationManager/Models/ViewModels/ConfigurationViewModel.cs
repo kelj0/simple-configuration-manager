@@ -1,4 +1,5 @@
-﻿using SimpleConfigurationManager.Models.DbModels;
+﻿using SimpleConfigurationManager.Infrastructure.Extensions;
+using SimpleConfigurationManager.Models.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,10 @@ namespace SimpleConfigurationManager.Models.ViewModels
         public int IdConfiguration { get; set; }
         public DateTime TimeOfCreation { get; set; }
         public DateTime? TimeOfLastUpdate { get; set; }
-        public string Hash { get; set; }
         public string Name { get; set; }
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
-        public string ConfigurationScript { get; set; }
+        public byte[] ConfigurationScript { get; set; }
         public bool IsPublic { get; set; }
         public int OperatingSystemId { get; set; }
         public int UserId { get; set; }
@@ -30,7 +30,7 @@ namespace SimpleConfigurationManager.Models.ViewModels
                 IdConfiguration = this.IdConfiguration,
                 TimeOfCreation = this.TimeOfCreation,
                 TimeOfLastUpdate = this.TimeOfLastUpdate,
-                Hash = this.Hash,
+                Hash = Convert.ToBase64String(this.ConfigurationScript).GetSha1(),
                 Name = this.Name,
                 ShortDescription = this.ShortDescription,
                 FullDescription = this.FullDescription,
@@ -50,7 +50,6 @@ namespace SimpleConfigurationManager.Models.ViewModels
                 IdConfiguration = configuration.IdConfiguration,
                 TimeOfCreation = configuration.TimeOfCreation,
                 TimeOfLastUpdate = configuration.TimeOfLastUpdate,
-                Hash = configuration.Hash,
                 Name = configuration.Name,
                 ShortDescription = configuration.ShortDescription,
                 FullDescription = configuration.FullDescription,

@@ -17,6 +17,7 @@ namespace SimpleConfigurationManager.Models.DbModels
         public int OperatingSystemId { get; set; }
         public int UserId { get; set; }
         public bool? Deleted { get; set; }
+        public DateTime? TimeOfLastPing { get; set; }
 
         public virtual OperatingSystem OperatingSystem { get; set; }
         public virtual User User { get; set; }

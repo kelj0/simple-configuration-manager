@@ -29,16 +29,37 @@ namespace SimpleConfigurationManager.Controllers
         }
 
         /// <summary>
-        /// Returns all public configurations.
+        /// Returns configuration file with name specified in request.
         /// </summary>
+        /// <param name="fileName">File name with extension.</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{fileName}")]
         [ProducesResponseType(typeof(ConfigurationViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ConfigurationViewModel>> GetPublic([Range(1, int.MaxValue)]int configurationId)
+        public async Task<ActionResult<ConfigurationViewModel>> DownloadFile(string fileName)
+        {
+            var config = await scmContext.Set<Configuration>()
+                .Where(c => c.Name == fileName && !c.Deleted.Value)
+                .Select(c => c.ConfigurationScript)
+                .SingleOrDefaultAsync();
+
+            return File(config, "application/force-download", fileName);
+        }
+
+        /// <summary>
+        /// Returns all public configurations.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ConfigurationViewModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ConfigurationViewModel>>> GetPublic([Range(1, int.MaxValue)]int configurationId)
         {
             var publicConfigs = await scmContext.Set<Configuration>().Where(c => c.IsPublic && !c.Deleted.Value).ToListAsync();
 
@@ -144,6 +165,35 @@ namespace SimpleConfigurationManager.Controllers
             var newConfigId = await scmContext.SaveChangesAsync();
 
             return Ok(newConfigId);
+        }
+
+        /// <summary>
+        /// Checks integrity of configuration.
+        /// </summary>
+        /// <param name="request">Request model containing configuration Id and Sha1 hash as string.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(int?), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<bool>> CheckConfigIntegrity([FromBody] ConfigIntegrityCheckRequestModel request)
+        {
+            var config = await scmContext.Set<Configuration>().SingleOrDefaultAsync(c => c.Name == request.ConfigName && !c.Deleted.Value);
+
+            if (config == null)
+            {
+                return NotFound($"Configuration does not exist");
+            } else if(request.Hash == config.Hash)
+            {
+                return Ok(true);
+            } else
+            {
+                return Ok(false);
+            }
         }
 
         /// <summary>
