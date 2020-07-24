@@ -84,7 +84,7 @@ function check_for_new_config(){
     }
 
     $json = $data | ConvertTo-Json
-    $response = Invoke-RestMethod https://jsonplaceholder.typicode.com/todos/ -Method POST -Body $json -ContentType 'application/json'
+    $response = Invoke-RestMethod $DOWNLOAD_URL -Method POST -Body $json -ContentType 'application/json'
 
     if(!($response.true)){
     Set-SCMConfig($response.configurl)
