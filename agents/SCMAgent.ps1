@@ -24,15 +24,15 @@ Register-ScheduledTask -TaskName "SCMCheckConfig" -Trigger $trigger2 -User "SYST
 }
 
 ## ID
-$id = 'win-123456'
+$ConfigName = 'win-123456'
 
 ## Config password
 $KeyEncryptionPassword = ConvertTo-SecureString -AsPlainText -String "Pa55w.rd" -Force
 
 ## URL
 $ROOT_URL='http://localhost';
-$HEARTHBEAT_URL=$ROOT_URL+"/api/hearthbeat";
-$DOWNLOAD_URL=$ROOT_URL+"/api/config";
+$HEARTHBEAT_URL=$ROOT_URL+"/api/SCM/Configuration";
+$DOWNLOAD_URL=$ROOT_URL+"/api/SCM/Configuration";
 
 ## Config path
 
@@ -53,7 +53,7 @@ If(!(test-path $pathRoot) -or !(test-path $pathConfig) -or !(test-path $pathBase
 
 function heartbeat(){
     # ping server on url 
-    Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body "{ 'id':$id }"
+    Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body "{ 'serverId':$ConfigName }"
 }
 
 
@@ -77,16 +77,16 @@ function check_for_new_config(){
     
     export_config_files
 
-    $config_sha1 = (Get-FileHash -Path C:\SCM\baseline\exported.zip -Algorithm SHA1).hash
+    $Hash = (Get-FileHash -Path C:\SCM\baseline\exported.zip -Algorithm SHA1).hash
     $data = @{
-        id=$id
-        config_sha1=$config_sha1
+        ConfigName=$ConfigName
+        Hash=$Hash
     }
 
     $json = $data | ConvertTo-Json
     $response = Invoke-RestMethod https://jsonplaceholder.typicode.com/todos/ -Method POST -Body $json -ContentType 'application/json'
 
-    if(!($response.config_sha1 = $config_sha1)){
+    if(!($response.true)){
     Set-SCMConfig($response.configurl)
     }
 
