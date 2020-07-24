@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp"
-    tools:context=".RegisterActivity">
-
+    tools:context=".RegisterActivity"
+>
     <TextView
         android:id="@+id/twRegisterTitle"
         android:text="@string/register"
         android:textAlignment="center"
         android:textSize="30dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+    />
     <EditText
         android:id="@+id/etRegisterEmail"
         android:hint="@string/email"
         android:inputType="textWebEmailAddress"
         android:layout_below="@+id/twRegisterTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+    />
     <EditText
         android:id="@+id/etRegisterPassword"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:layout_below="@+id/etRegisterEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+    />
     <EditText
         android:id="@+id/etRegisterRepeatPassword"
         android:hint="@string/repeat_password"
         android:inputType="textPassword"
         android:layout_below="@+id/etRegisterPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_height="wrap_content"
+    />
     <Button
         android:id="@+id/btnRegister"
         android:text="@string/register"
         android:layout_below="@+id/etRegisterRepeatPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+    />
 </RelativeLayout>
