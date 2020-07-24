@@ -142,3 +142,12 @@ GO
 ALTER TABLE [dbo].[ServerConfiguration]  WITH CHECK ADD  CONSTRAINT [FK_ServerConfiguration_Configuration] FOREIGN KEY([ConfigurationId])
 REFERENCES [dbo].[Configuration] ([IdConfiguration]);
 GO
+
+ALTER TABLE [dbo].[Server]
+ADD TimeOfLastPing datetime NULL
+
+ALTER TABLE [dbo].[Configuration]
+DROP COLUMN ConfigurationScript;
+
+ALTER TABLE [dbo].[Configuration]
+ADD ConfigurationScript varbinary(max) NOT NULL;
