@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 ROOT_URL='http://localhost';
-HEARTHBEAT_URL=$ROOT_URL+"/api/hearthbeat";
-DOWNLOAD_URL=$ROOT_URL+"/api/config";
-CHECK_CONFIG_URL=$ROOT_URL+"/api/check";
+HEARTHBEAT_URL=$ROOT_URL"/api/hearthbeat";
+DOWNLOAD_URL=$ROOT_URL"/api/config";
+CHECK_CONFIG_URL=$ROOT_URL"/api/check";
 DOWNLOAD_FOLDER="$HOME";
 CONFIG_NAME='config';
 CONFIG_EXTENSION='zip';
-CONFIG_SHA1='';
+CONFIG_SHA1='.';
 SERVER_NAME='linux1';
 
 
@@ -24,7 +24,7 @@ update_config_sha1(){
 }
 
 check_for_new_config(){
-    if [[ $(curl -sb -H "Accept: application/json" $CHECK_CONFIG_URL) == *"false"*  ]]; then 
+    if [[ $(curl -sb -H "Accept: application/json" $CHECK_CONFIG_URL -d "{'sha1': '$CONFIG_SHA1'}") == *"false"*  ]]; then 
         get_and_setup_config;
         restart_services;
     fi

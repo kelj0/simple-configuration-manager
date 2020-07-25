@@ -15,14 +15,10 @@ web_server/ -> directory for c# web server and SQL for the creation of database
 - [x] - Create database diagram
 - [x] - Create mobile mockups
 - [ ] - Write better docs and todo
-- [ ] - API(login, register, querying bots, shutting down servers..)
-- [ ] - Web application(Command & Control server)
-- [ ] - Mobile application(Limited C&C server)
-- [ ] - BASH agent
-- [ ] - Powershell agent
+- [x] - API(login, register, querying bots, shutting down servers..)
+- [x] - Web application(Command & Control server)
+- [x] - Mobile application(Limited C&C server)
+- [x] - BASH agent
+- [x] - Powershell agent
 
 
-#### Mobile app alerts
-
-* if server is offline
-* if config integrity is compromised
