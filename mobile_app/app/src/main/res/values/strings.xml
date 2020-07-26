@@ -24,4 +24,6 @@
     <string name="last_name">Last Name</string>
     <string name="server_id">Server ID:</string>
     <string name="deleted">Deleted:</string>
+    <string name="config_sent">Config sent!</string>
+    <string name="config_deleted">Config deleted</string>
 </resources>
