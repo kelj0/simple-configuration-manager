@@ -23,4 +23,6 @@
     <string name="username">Korisnicko ime</string>
     <string name="first_name">Ime</string>
     <string name="last_name">Prezime</string>
+    <string name="server_id">ID servera:</string>
+    <string name="deleted">Obrisan:</string>
 </resources>
