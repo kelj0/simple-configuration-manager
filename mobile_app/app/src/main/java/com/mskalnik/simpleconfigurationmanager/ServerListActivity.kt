@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.mskalnik.simpleconfigurationmanager.adapter.ServerListAdapter
-import com.mskalnik.simpleconfigurationmanager.model.Server
+import com.mskalnik.simpleconfigurationmanager.controller.ApiController
 
 class ServerListActivity : BaseActivity() {
 
@@ -15,7 +15,7 @@ class ServerListActivity : BaseActivity() {
 
         val rvServerList            = findViewById<RecyclerView>(R.id.rvServerList)
         val swipeRefreshLayout      = findViewById<SwipeRefreshLayout>(R.id.swContainer);
-        val servers                 = Server.getServers()
+        val servers                 = ApiController.getServers()
         val adapter                 = ServerListAdapter(servers)
         rvServerList.adapter        = adapter
         rvServerList.layoutManager  = LinearLayoutManager(this)
