@@ -4,6 +4,7 @@ import android.os.StrictMode
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.mskalnik.simpleconfigurationmanager.model.OperatingSystem
 import com.mskalnik.simpleconfigurationmanager.model.Server
 import com.mskalnik.simpleconfigurationmanager.model.User
 import com.mskalnik.simpleconfigurationmanager.model.Util
@@ -19,11 +20,12 @@ class ApiController {
         private const val SERVER_NAME           = "http://invent.hr:5000"
         private const val CREATE_USER           = "$SERVER_NAME/api/SCM/User/CreateUser"
         private const val GET_SERVER_BY_USER    = "$SERVER_NAME/api/SCM/Server/GetByUser/1"
+        private const val GET_OPERATING_SYSTEMS = "$SERVER_NAME/api/SCM/OperatingSystems/Get"
         private const val REMOVE_SERVER         = "$SERVER_NAME/api/SCM/Server/RemoveConfiguration"
 
         private val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
 
-        fun create(user: User): String {
+        fun createUser(user: User): String {
             startNewThread()
             val requestBody = Gson()
                 .toJson(user)
@@ -40,10 +42,23 @@ class ApiController {
             startNewThread()
             val json = Util.fetchJson(GET_SERVER_BY_USER)
             val dataType: Type = object : TypeToken<Collection<Server?>?>() {}.type
+            val servers = GsonBuilder()
+                .create()
+                .fromJson<List<Server>>(json, dataType)
+
+            servers.forEach { server -> server.operatingSystem = getOperatingSystem(server.operatingSystemId) }
+            return servers
+        }
+
+        private fun getOperatingSystem(id: Number): String {
+            startNewThread()
+            val json = Util.fetchJson(GET_OPERATING_SYSTEMS)
+            val dataType: Type = object : TypeToken<Collection<OperatingSystem?>?>() {}.type
 
             return GsonBuilder()
                 .create()
-                .fromJson<List<Server>>(json, dataType)
+                .fromJson<List<OperatingSystem>>(json, dataType)[id.toInt() - 1]
+                .operatingSystemName
         }
 
         private fun startNewThread() {

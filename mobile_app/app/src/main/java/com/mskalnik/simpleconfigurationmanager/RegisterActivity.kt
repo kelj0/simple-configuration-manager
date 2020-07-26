@@ -2,7 +2,6 @@ package com.mskalnik.simpleconfigurationmanager
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.widget.EditText
 import com.mskalnik.simpleconfigurationmanager.controller.ApiController
 import com.mskalnik.simpleconfigurationmanager.model.User
@@ -54,7 +53,7 @@ class RegisterActivity : BaseActivity() {
         } else if (!password.equals(repeatPassword)) {
             Util.showToast(this, getString(R.string.registerPasswordWarning))
         } else {
-            ApiController.create(User(userName, firstName, lastName, email, password))
+            ApiController.createUser(User(userName, firstName, lastName, email, password))
             Util.showToast(this, "User $firstName $lastName registered")
             startActivity(Intent(this, WelcomeActivity::class.java))
         }
