@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.mskalnik.simpleconfigurationmanager.adapter.ServerListAdapter
 import com.mskalnik.simpleconfigurationmanager.controller.ApiController
+import com.mskalnik.simpleconfigurationmanager.model.Server
+import java.lang.Error
 
 class ServerListActivity : BaseActivity() {
 

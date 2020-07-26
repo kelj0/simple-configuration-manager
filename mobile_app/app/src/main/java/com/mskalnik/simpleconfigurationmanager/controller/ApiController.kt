@@ -37,6 +37,7 @@ class ApiController {
         }
 
         fun getServers(): List<Server> {
+            startNewThread()
             val json = Util.fetchJson(GET_SERVER_BY_USER)
             val dataType: Type = object : TypeToken<Collection<Server?>?>() {}.type
 

@@ -33,7 +33,6 @@ class RegisterActivity : BaseActivity() {
                 etRegisterRepeatPassword.text.toString()
             )
         }
-
     }
 
     private fun registerUser(

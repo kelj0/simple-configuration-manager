@@ -22,6 +22,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkLoginCredentials(): Boolean {
-        return etLoginEmail.text.toString() == "mail" && etLoginPassword.text.toString() == "pass"
+//        return etLoginEmail.text.toString() == "mail" && etLoginPassword.text.toString() == "pass"
+        return true
     }
 }
