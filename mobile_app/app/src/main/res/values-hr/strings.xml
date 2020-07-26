@@ -10,4 +10,19 @@
     <string name="english">Engleski</string>
     <string name="open_the_web_version">Odjava</string>
     <string name="wrong_email_password">Krivi email ili lozinka</string>
+    <string name="permission_warning">Morate prihvatiti dozvole</string>
+    <string name="registerFillWarning">Ispunite sva polja</string>
+    <string name="registerPasswordWarning">Unesite iste lozinke</string>
+    <string name="server_name">Ime servera:</string>
+    <string name="server_status">Status servera:</string>
+    <string name="ip_address">IP Aresa:</string>
+    <string name="operating_system">Operacijski sustav:</string>
+    <string name="config_name">Ime konfiga:</string>
+    <string name="send_config_again">Posalji konfig</string>
+    <string name="delete_server">Obrisi server</string>
+    <string name="username">Korisnicko ime</string>
+    <string name="first_name">Ime</string>
+    <string name="last_name">Prezime</string>
+    <string name="server_id">ID servera:</string>
+    <string name="deleted">Obrisan:</string>
 </resources>

@@ -10,4 +10,19 @@
     <string name="english">English</string>
     <string name="open_the_web_version">Logout</string>
     <string name="wrong_email_password">Wrong email or password!</string>
+    <string name="permission_warning">You need to grant permission</string>
+    <string name="registerFillWarning">Fill out all fields</string>
+    <string name="registerPasswordWarning">Enter same passwords</string>
+    <string name="server_name">Server name:</string>
+    <string name="server_status">Server status:</string>
+    <string name="ip_address">IP Address:</string>
+    <string name="operating_system">Operating system:</string>
+    <string name="config_name">Config name:</string>
+    <string name="send_config_again">Send Config</string>
+    <string name="delete_server">Delete Server</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="server_id">Server ID:</string>
+    <string name="deleted">Deleted:</string>
 </resources>

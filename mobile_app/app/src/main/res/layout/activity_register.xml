@@ -16,10 +16,34 @@
         android:layout_height="wrap_content"
     />
     <EditText
+        android:id="@+id/etRegisterUserName"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:layout_below="@+id/twRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+    <EditText
+        android:id="@+id/etRegisterFirstName"
+        android:hint="@string/first_name"
+        android:inputType="text"
+        android:layout_below="@+id/etRegisterUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+    <EditText
+        android:id="@+id/etRegisterLastName"
+        android:hint="@string/last_name"
+        android:inputType="text"
+        android:layout_below="@+id/etRegisterFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+    <EditText
         android:id="@+id/etRegisterEmail"
         android:hint="@string/email"
         android:inputType="textWebEmailAddress"
-        android:layout_below="@+id/twRegisterTitle"
+        android:layout_below="@+id/etRegisterLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
     />

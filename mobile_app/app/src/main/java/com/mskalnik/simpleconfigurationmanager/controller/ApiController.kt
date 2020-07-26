@@ -1,8 +1,10 @@
 package com.mskalnik.simpleconfigurationmanager.controller
 
+import android.os.StrictMode
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.mskalnik.simpleconfigurationmanager.model.OperatingSystem
 import com.mskalnik.simpleconfigurationmanager.model.Server
 import com.mskalnik.simpleconfigurationmanager.model.User
 import com.mskalnik.simpleconfigurationmanager.model.Util
@@ -18,29 +20,67 @@ class ApiController {
         private const val SERVER_NAME           = "http://invent.hr:5000"
         private const val CREATE_USER           = "$SERVER_NAME/api/SCM/User/CreateUser"
         private const val GET_SERVER_BY_USER    = "$SERVER_NAME/api/SCM/Server/GetByUser/1"
-        private const val REMOVE_SERVER         = "$SERVER_NAME/api/SCM/Server/RemoveConfiguration"
+        private const val GET_OPERATING_SYSTEMS = "$SERVER_NAME/api/SCM/OperatingSystems/Get"
+        private const val REMOVE_SERVER         = "$SERVER_NAME/api/SCM/Server/DeleteUser"
 
         private val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
 
-        fun create(user: User): String {
-            val client = OkHttpClient()
-            val json = Gson().toJson(this)
-            val requestBody = json.toRequestBody(JSON)
+        fun createUser(user: User): String {
+            startNewThread()
+            val requestBody = Gson()
+                .toJson(user)
+                .toRequestBody(JSON)
             val request = Request.Builder()
-                .url("$SERVER_NAME/api/SCM/User/CreateUser")
+                .url(CREATE_USER)
                 .post(requestBody)
                 .build();
+
+            OkHttpClient().newCall(request).execute().use { response -> return response.body!!.string() }
+        }
+
+        fun getServers(): List<Server> {
+            startNewThread()
+            val json = Util.fetchJson(GET_SERVER_BY_USER)
+            val dataType: Type = object : TypeToken<Collection<Server?>?>() {}.type
+            val servers = GsonBuilder()
+                .create()
+                .fromJson<List<Server>>(json, dataType)
+
+            servers.forEach { server -> server.operatingSystem = getOperatingSystem(server.operatingSystemId) }
+            return servers
+        }
+
+        fun removeServer(id: String): String {
+            startNewThread()
+            val client = OkHttpClient()
+            val request = Request
+                .Builder()
+                .url("$REMOVE_SERVER/$id")
+                .delete()
+                .build()
 
             client.newCall(request).execute().use { response -> return response.body!!.string() }
         }
 
-        fun getServers(): List<Server> {
-            val json = Util.fetchJson(GET_SERVER_BY_USER)
-            val dataType: Type = object : TypeToken<Collection<Server?>?>() {}.type
+        private fun getOperatingSystem(id: Number): String {
+            startNewThread()
+            val json = Util.fetchJson(GET_OPERATING_SYSTEMS)
+            val dataType: Type = object : TypeToken<Collection<OperatingSystem?>?>() {}.type
 
             return GsonBuilder()
                 .create()
-                .fromJson<List<Server>>(json, dataType)
+                .fromJson<List<OperatingSystem>>(json, dataType)[id.toInt() - 1]
+                .operatingSystemName
+        }
+
+        private fun startNewThread() {
+            val policy = StrictMode
+                .ThreadPolicy
+                .Builder()
+                .permitAll()
+                .build()
+
+            StrictMode.setThreadPolicy(policy)
         }
     }
 }

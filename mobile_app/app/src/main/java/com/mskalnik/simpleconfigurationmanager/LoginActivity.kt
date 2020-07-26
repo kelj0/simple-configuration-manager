@@ -2,7 +2,6 @@ package com.mskalnik.simpleconfigurationmanager
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.StrictMode
 import com.mskalnik.simpleconfigurationmanager.model.Util
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -22,13 +21,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkLoginCredentials(): Boolean {
-        val policy = StrictMode
-                .ThreadPolicy
-                .Builder()
-                .permitAll()
-                .build()
-
-        StrictMode.setThreadPolicy(policy)
-        return etLoginEmail.text.toString() == "mail" && etLoginPassword.text.toString() == "pass"
+        return etLoginEmail.text.toString() == "admin@email.com" && etLoginPassword.text.toString() == "123"
     }
 }

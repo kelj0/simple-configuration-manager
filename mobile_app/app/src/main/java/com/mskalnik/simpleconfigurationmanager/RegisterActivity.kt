@@ -3,6 +3,8 @@ package com.mskalnik.simpleconfigurationmanager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
+import com.mskalnik.simpleconfigurationmanager.controller.ApiController
+import com.mskalnik.simpleconfigurationmanager.model.User
 import com.mskalnik.simpleconfigurationmanager.model.Util
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -13,36 +15,47 @@ class RegisterActivity : BaseActivity() {
         setContentView(R.layout.activity_register)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val etRegisterEmail: EditText           = findViewById(R.id.etRegisterEmail)
-        val etRegisterPassword: EditText        = findViewById(R.id.etRegisterPassword)
-        val etRegisterRepeatPassword: EditText  = findViewById(R.id.etRegisterRepeatPassword)
+        val etRegisterUserName: EditText = findViewById(R.id.etRegisterUserName)
+        val etRegisterFirstName: EditText = findViewById(R.id.etRegisterFirstName)
+        val etRegisterLastName: EditText = findViewById(R.id.etRegisterLastName)
+        val etRegisterEmail: EditText = findViewById(R.id.etRegisterEmail)
+        val etRegisterPassword: EditText = findViewById(R.id.etRegisterPassword)
+        val etRegisterRepeatPassword: EditText = findViewById(R.id.etRegisterRepeatPassword)
 
         btnRegister.setOnClickListener {
-            if (isValid(
-                    etRegisterEmail,
-                    etRegisterPassword,
-                    etRegisterRepeatPassword
-                )
-            ) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-            }
-
+            registerUser(
+                etRegisterUserName.text.toString(),
+                etRegisterFirstName.text.toString(),
+                etRegisterLastName.text.toString(),
+                etRegisterEmail.text.toString(),
+                etRegisterPassword.text.toString(),
+                etRegisterRepeatPassword.text.toString()
+            )
         }
     }
 
-    private fun isValid(
-        email: EditText,
-        password: EditText,
-        repeatPassword: EditText
-    ): Boolean {
-        if (email.text.isEmpty() || password.text.isEmpty() || repeatPassword.text.isEmpty()) {
+    private fun registerUser(
+        userName: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        repeatPassword: String
+    ) {
+        if (userName.isEmpty()
+            || firstName.isEmpty()
+            || lastName.isEmpty()
+            || email.isEmpty()
+            || password.isEmpty()
+            || repeatPassword.isEmpty()
+        ) {
             Util.showToast(this, getString(R.string.registerFillWarning))
-            return false
-        } else if (password.text.toString() != repeatPassword.text.toString()) {
+        } else if (password != repeatPassword) {
             Util.showToast(this, getString(R.string.registerPasswordWarning))
-            return false
+        } else {
+            ApiController.createUser(User(userName, firstName, lastName, email, password))
+            Util.showToast(this, "User $firstName $lastName registered")
+            startActivity(Intent(this, WelcomeActivity::class.java))
         }
-        Util.showToast(this, "User ${email.text} registered")
-        return true
     }
 }
