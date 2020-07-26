@@ -19,4 +19,7 @@
     <string name="config_name">Config name:</string>
     <string name="send_config_again">Send Config</string>
     <string name="delete_server">Delete Server</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 </resources>

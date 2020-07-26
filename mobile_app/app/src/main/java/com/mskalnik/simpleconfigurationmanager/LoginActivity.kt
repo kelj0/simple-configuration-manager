@@ -22,13 +22,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkLoginCredentials(): Boolean {
-        val policy = StrictMode
-                .ThreadPolicy
-                .Builder()
-                .permitAll()
-                .build()
-
-        StrictMode.setThreadPolicy(policy)
         return etLoginEmail.text.toString() == "mail" && etLoginPassword.text.toString() == "pass"
     }
 }

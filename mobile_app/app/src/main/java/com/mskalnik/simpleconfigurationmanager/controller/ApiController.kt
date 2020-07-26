@@ -1,5 +1,6 @@
 package com.mskalnik.simpleconfigurationmanager.controller
 
+import android.os.StrictMode
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -23,15 +24,16 @@ class ApiController {
         private val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
 
         fun create(user: User): String {
-            val client = OkHttpClient()
-            val json = Gson().toJson(this)
-            val requestBody = json.toRequestBody(JSON)
+            startNewThread()
+            val requestBody = Gson()
+                .toJson(user)
+                .toRequestBody(JSON)
             val request = Request.Builder()
-                .url("$SERVER_NAME/api/SCM/User/CreateUser")
+                .url(CREATE_USER)
                 .post(requestBody)
                 .build();
 
-            client.newCall(request).execute().use { response -> return response.body!!.string() }
+            OkHttpClient().newCall(request).execute().use { response -> return response.body!!.string() }
         }
 
         fun getServers(): List<Server> {
@@ -41,6 +43,16 @@ class ApiController {
             return GsonBuilder()
                 .create()
                 .fromJson<List<Server>>(json, dataType)
+        }
+
+        private fun startNewThread() {
+            val policy = StrictMode
+                .ThreadPolicy
+                .Builder()
+                .permitAll()
+                .build()
+
+            StrictMode.setThreadPolicy(policy)
         }
     }
 }
