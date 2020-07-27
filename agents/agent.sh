@@ -27,6 +27,7 @@ check_for_new_config(){
     if [[ $(curl -sb -H "Accept: application/json" $CHECK_CONFIG_URL -d "{\"hash\": \"$CONFIG_SHA1\", \"configName\":\"$CONFIG_NAME.$CONFIG_EXTENSION\"}") == *"false"*  ]]; then 
         get_and_setup_config;
         restart_services;
+        update_config_sha1;
     fi
 }
 
