@@ -151,3 +151,9 @@ DROP COLUMN ConfigurationScript;
 
 ALTER TABLE [dbo].[Configuration]
 ADD ConfigurationScript varbinary(max) NOT NULL;
+
+ALTER TABLE [dbo].[User]
+ADD Token nvarchar(150) NULL;
+
+ALTER TABLE [dbo].[User]
+ADD TimeOfLastLogin datetime NULL;
