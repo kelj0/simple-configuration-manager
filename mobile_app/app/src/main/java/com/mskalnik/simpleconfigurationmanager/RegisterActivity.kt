@@ -15,12 +15,12 @@ class RegisterActivity : BaseActivity() {
         setContentView(R.layout.activity_register)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val etRegisterUserName: EditText = findViewById(R.id.etRegisterUserName)
-        val etRegisterFirstName: EditText = findViewById(R.id.etRegisterFirstName)
-        val etRegisterLastName: EditText = findViewById(R.id.etRegisterLastName)
-        val etRegisterEmail: EditText = findViewById(R.id.etRegisterEmail)
-        val etRegisterPassword: EditText = findViewById(R.id.etRegisterPassword)
-        val etRegisterRepeatPassword: EditText = findViewById(R.id.etRegisterRepeatPassword)
+        val etRegisterUserName: EditText        = findViewById(R.id.etRegisterUserName)
+        val etRegisterFirstName: EditText       = findViewById(R.id.etRegisterFirstName)
+        val etRegisterLastName: EditText        = findViewById(R.id.etRegisterLastName)
+        val etRegisterEmail: EditText           = findViewById(R.id.etRegisterEmail)
+        val etRegisterPassword: EditText        = findViewById(R.id.etRegisterPassword)
+        val etRegisterRepeatPassword: EditText  = findViewById(R.id.etRegisterRepeatPassword)
 
         btnRegister.setOnClickListener {
             registerUser(
