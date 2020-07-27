@@ -19,6 +19,8 @@ namespace SimpleConfigurationManager.Models.DbModels
         public string LastName { get; set; }
         public string Email { get; set; }
         public bool? Deleted { get; set; }
+        public string Token { get; set; }
+        public DateTime? TimeOfLastLogin { get; set; }
 
         public virtual ICollection<Configuration> Configuration { get; set; }
         public virtual ICollection<ConfigurationReview> ConfigurationReview { get; set; }

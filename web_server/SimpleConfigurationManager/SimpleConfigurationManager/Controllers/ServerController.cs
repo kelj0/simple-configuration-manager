@@ -199,7 +199,7 @@ namespace SimpleConfigurationManager.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> DeleteUser([FromQuery] int serverId)
+        public async Task<ActionResult> DeleteServer(int serverId)
         {
             var server = await scmContext.Set<Server>()
                 .SingleOrDefaultAsync(s => s.IdServer == serverId && !s.Deleted.Value);

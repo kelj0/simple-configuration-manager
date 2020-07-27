@@ -23,7 +23,9 @@ namespace SimpleConfigurationManager.Models.RequestModels
                 Password = this.Password,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
-                Email = this.Email
+                Email = this.Email,
+                Token = Guid.NewGuid().ToString(),
+                TimeOfLastLogin = DateTime.UtcNow
             };
         }
     }
