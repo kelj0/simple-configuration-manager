@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-ROOT_URL='http://localhost';
-HEARTHBEAT_URL=$ROOT_URL"/api/hearthbeat";
-DOWNLOAD_URL=$ROOT_URL"/api/config";
-CHECK_CONFIG_URL=$ROOT_URL"/api/check";
+ROOT_URL='http://invent.hr:5000';
+HEARTHBEAT_URL=$ROOT_URL"/api/SCM/Server/Ping/";
+DOWNLOAD_URL=$ROOT_URL"/api/SCM/Configuration/DownloadFile/";
+CHECK_CONFIG_URL=$ROOT_URL"/api/SCM/Configuration/CheckConfigIntegrity/";
 DOWNLOAD_FOLDER="$HOME";
 CONFIG_NAME='config';
 CONFIG_EXTENSION='zip';
@@ -12,7 +12,7 @@ SERVER_NAME='linux1';
 
 
 hearthbeat(){
-    curl -H 'Content-Type:application/json' $HEARTHBEAT_URL -d "{'serverName': '$SERVER_NAME'}";
+    curl -H 'Content-Type:application/json' $HEARTHBEAT_URL -d "{\"serverName\": \"$SERVER_NAME\"}";
 }
 
 zip_config_files(){
@@ -24,7 +24,7 @@ update_config_sha1(){
 }
 
 check_for_new_config(){
-    if [[ $(curl -sb -H "Accept: application/json" $CHECK_CONFIG_URL -d "{'sha1': '$CONFIG_SHA1'}") == *"false"*  ]]; then 
+    if [[ $(curl -sb -H "Accept: application/json" $CHECK_CONFIG_URL -d "{\"hash\": \"$CONFIG_SHA1\", \"configName\":\"$CONFIG_NAME.$CONFIG_EXTENSION\"}") == *"false"*  ]]; then 
         get_and_setup_config;
         restart_services;
     fi
