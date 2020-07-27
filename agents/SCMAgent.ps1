@@ -14,17 +14,18 @@ $scmpath = "c:\SCM\SCMConfig.ps1"
 $trigger1 =  New-ScheduledTaskTrigger -Once -at '00:00' -RepetitionInterval(New-TimeSpan -Minutes 1) 
 $trigger2 =  New-ScheduledTaskTrigger -Once -at '00:00' -RepetitionInterval(New-TimeSpan -Minutes 10) 
 
-$heartbeat = New-ScheduledTaskAction -Execute "PowerShell.exe $scmpath;heartbeat"
+$SCMHeartbeat = New-ScheduledTaskAction -Execute "PowerShell.exe $scmpath;heartbeat"
 $SMCCheckConfig = New-ScheduledTaskAction -Execute "PowerShell.exe $scmpath;check_for_new_config"
 
-Register-ScheduledTask -TaskName "SCMHeartbeat" -Trigger $trigger1 -User "SYSTEM" -Action $command
-Register-ScheduledTask -TaskName "SCMCheckConfig" -Trigger $trigger2 -User "SYSTEM" -Action $command
+Register-ScheduledTask -TaskName "SCMHeartbeat" -Trigger $trigger1 -User "SYSTEM" -Action $SCMHeartbeat
+Register-ScheduledTask -TaskName "SCMCheckConfig" -Trigger $trigger2 -User "SYSTEM" -Action $SMCCheckConfig
 
 
 }
 
 ## ID
-$ConfigName = 'win-111111.zip'
+$ConfigName = 'win-123456.zip'
+$ServerName = 'win-123456'
 
 ## Config password
 $KeyEncryptionPassword = ConvertTo-SecureString -AsPlainText -String "Pa55w.rd" -Force
@@ -34,6 +35,7 @@ $ROOT_URL='http://invent.hr:5000';
 $HEARTHBEAT_URL=$ROOT_URL+"/api/SCM/Server/ping";
 $DOWNLOAD_URL=$ROOT_URL+"/api/SCM/Configuration/CheckConfigIntegrity ";
 $INTEGRITY_URL = $ROOT_URL+"/api/SCM/Configuration/CheckConfigIntegrity ";
+$DOWNLOAD_URL = $ROOT_URL+"/api/SCM/Configuration/DownloadFile/"
 
 ## Config path
 
@@ -54,8 +56,7 @@ If(!(test-path $pathRoot) -or !(test-path $pathConfig) -or !(test-path $pathBase
 
 function heartbeat(){
     # ping server on url 
-    #Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body "{ 'serverId':$ConfigName }"
-    Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body (@{"ServerName"="$ConfigName";}|ConvertTo-Json)
+    Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body (@{"ServerName"="$Servername";}|ConvertTo-Json)
 }
 
 
@@ -82,7 +83,7 @@ function check_for_new_config(){
     $Hash = (Get-FileHash -Path C:\SCM\baseline\exported.zip -Algorithm SHA1).hash
     $response = Invoke-WebRequest -UseBasicParsing $INTEGRITY_URL -ContentType "application/json" -Method POST -Body (@{"ConfigName"="$ConfigName";"Hash"="$Hash";}|ConvertTo-Json)
     if ($response.content -eq "false"){
-    $url="http://invent.hr:5000/api/SCM/Configuration/DownloadFile/"+$ConfigName
+    $url=$DOWNLOAD_URL+$ConfigName
     Write-Host "Config not valid"
     Set-SCMConfig($url)
     }
