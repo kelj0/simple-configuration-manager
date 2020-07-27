@@ -13,6 +13,6 @@
         public const int CacheDuration = 30;
 
         //public static readonly string CONNECTION_STRING = "Server=localhost;Database=ScmDb;Trusted_Connection=True;";
-        public static readonly string CONNECTION_STRING = "Server=localhost;Database=ScmDb;Trusted_Connection=false;User ID=scm;Password=Pa55w.rd";
+        public static readonly string CONNECTION_STRING = "Server=localhost;Database=ScmDb;Trusted_Connection=false;User ID=<FILL_ME>;Password=<FILL_ME>";
     }
 }
