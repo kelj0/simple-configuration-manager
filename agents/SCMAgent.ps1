@@ -24,15 +24,16 @@ Register-ScheduledTask -TaskName "SCMCheckConfig" -Trigger $trigger2 -User "SYST
 }
 
 ## ID
-$ConfigName = 'win-123456'
+$ConfigName = 'win-111111.zip'
 
 ## Config password
 $KeyEncryptionPassword = ConvertTo-SecureString -AsPlainText -String "Pa55w.rd" -Force
 
 ## URL
-$ROOT_URL='http://localhost';
-$HEARTHBEAT_URL=$ROOT_URL+"/api/SCM/Configuration";
-$DOWNLOAD_URL=$ROOT_URL+"/api/SCM/Configuration";
+$ROOT_URL='http://invent.hr:5000';
+$HEARTHBEAT_URL=$ROOT_URL+"/api/SCM/Server/ping";
+$DOWNLOAD_URL=$ROOT_URL+"/api/SCM/Configuration/CheckConfigIntegrity ";
+$INTEGRITY_URL = $ROOT_URL+"/api/SCM/Configuration/CheckConfigIntegrity ";
 
 ## Config path
 
@@ -53,7 +54,8 @@ If(!(test-path $pathRoot) -or !(test-path $pathConfig) -or !(test-path $pathBase
 
 function heartbeat(){
     # ping server on url 
-    Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body "{ 'serverId':$ConfigName }"
+    #Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body "{ 'serverId':$ConfigName }"
+    Invoke-WebRequest -UseBasicParsing $HEARTHBEAT_URL -ContentType "application/json" -Method POST -Body (@{"ServerName"="$ConfigName";}|ConvertTo-Json)
 }
 
 
@@ -65,9 +67,10 @@ Compress-Archive -LiteralPath C:\scm\config -DestinationPath C:\SCM\baseline\exp
 
 }
 
-function Set-SCMConfig([string]$configurl){
-Invoke-WebRequest -uri $configurl -outfile $pathBaseline\baseline.zip
-Expand-Archive -LiteralPath C:\scm\baseline\baseline.zip -DestinationPath c:\scm\config
+function Set-SCMConfig([string]$DOWNLOAD_URL){
+Write-Host "Seting up baseline"
+Invoke-WebRequest -uri $DOWNLOAD_URL -outfile $pathBaseline\baseline.zip
+Expand-Archive -LiteralPath C:\scm\baseline\baseline.zip -DestinationPath c:\scm\config -Force
 Enable-IISSharedConfig -PhysicalPath $pathConfig -KeyEncryptionPassword $KeyEncryptionPassword -Force
 Disable-IISSharedConfig
 
@@ -76,21 +79,12 @@ Disable-IISSharedConfig
 function check_for_new_config(){
     
     export_config_files
-
     $Hash = (Get-FileHash -Path C:\SCM\baseline\exported.zip -Algorithm SHA1).hash
-    $data = @{
-        ConfigName=$ConfigName
-        Hash=$Hash
-    }
-
-    $json = $data | ConvertTo-Json
-    $response = Invoke-RestMethod $DOWNLOAD_URL -Method POST -Body $json -ContentType 'application/json'
-
-    if(!($response.true)){
-    Set-SCMConfig($response.configurl)
+    $response = Invoke-WebRequest -UseBasicParsing $INTEGRITY_URL -ContentType "application/json" -Method POST -Body (@{"ConfigName"="$ConfigName";"Hash"="$Hash";}|ConvertTo-Json)
+    if ($response.content -eq "false"){
+    $url="http://invent.hr:5000/api/SCM/Configuration/DownloadFile/"+$ConfigName
+    Write-Host "Config not valid"
+    Set-SCMConfig($url)
     }
 
 }
-
-
-

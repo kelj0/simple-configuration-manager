@@ -50,7 +50,7 @@ class RegisterActivity : BaseActivity() {
             || repeatPassword.isEmpty()
         ) {
             Util.showToast(this, getString(R.string.registerFillWarning))
-        } else if (!password.equals(repeatPassword)) {
+        } else if (password != repeatPassword) {
             Util.showToast(this, getString(R.string.registerPasswordWarning))
         } else {
             ApiController.createUser(User(userName, firstName, lastName, email, password))

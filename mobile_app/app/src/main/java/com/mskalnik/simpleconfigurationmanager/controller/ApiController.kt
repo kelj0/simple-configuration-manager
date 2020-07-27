@@ -21,7 +21,7 @@ class ApiController {
         private const val CREATE_USER           = "$SERVER_NAME/api/SCM/User/CreateUser"
         private const val GET_SERVER_BY_USER    = "$SERVER_NAME/api/SCM/Server/GetByUser/1"
         private const val GET_OPERATING_SYSTEMS = "$SERVER_NAME/api/SCM/OperatingSystems/Get"
-        private const val REMOVE_SERVER         = "$SERVER_NAME/api/SCM/Server/RemoveConfiguration"
+        private const val REMOVE_SERVER         = "$SERVER_NAME/api/SCM/Server/DeleteUser"
 
         private val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
 
@@ -48,6 +48,18 @@ class ApiController {
 
             servers.forEach { server -> server.operatingSystem = getOperatingSystem(server.operatingSystemId) }
             return servers
+        }
+
+        fun removeServer(id: String): String {
+            startNewThread()
+            val client = OkHttpClient()
+            val request = Request
+                .Builder()
+                .url("$REMOVE_SERVER/$id")
+                .delete()
+                .build()
+
+            client.newCall(request).execute().use { response -> return response.body!!.string() }
         }
 
         private fun getOperatingSystem(id: Number): String {
